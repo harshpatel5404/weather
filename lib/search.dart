@@ -1,6 +1,5 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:weather/location.dart';
 
 import 'homescreen.dart';
 
@@ -20,7 +19,6 @@ class SearchCity extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: TextField(
-              controller: _controller,
               onChanged: (val) {
                 city = val;
               },
@@ -42,7 +40,8 @@ class SearchCity extends StatelessWidget {
             child: ElevatedButton(
                 onPressed: () {
                   print(city);
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomeScreen(city: city,)));
                 },
                 child: Text("Confirm")),
           )

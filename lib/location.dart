@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:weather/homescreen.dart';
+import 'package:weather/search.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,6 +26,7 @@ class Location extends StatefulWidget {
 class _LocationState extends State<Location> {
   var latitude;
   var longtitude;
+  String? city;
 
   Future _determinePosition() async {
     LocationPermission permission;
@@ -34,14 +37,14 @@ class _LocationState extends State<Location> {
       if (permission == LocationPermission.denied) {
         return Future.error('Location permissions are denied');
       }
-    
+
       return Geolocator.getCurrentPosition();
     } catch (e) {
       print(e);
     }
   }
 
-    _getAddressFromLatLng() async {
+  _getAddressFromLatLng() async {
     try {
       List<Placemark> placemarks =
           await placemarkFromCoordinates(latitude, longtitude);
@@ -52,6 +55,7 @@ class _LocationState extends State<Location> {
         _currentAddress =
             "${place.locality}, ${place.postalCode}, ${place.country}";
         print(_currentAddress);
+        city = place.locality;
       });
     } catch (e) {
       print(e);
@@ -65,13 +69,9 @@ class _LocationState extends State<Location> {
         latitude = position.latitude;
         longtitude = position.longitude;
       });
-    _getAddressFromLatLng();
+      _getAddressFromLatLng();
     });
-
-
   }
-
-
 
   var _currentAddress;
 
@@ -79,7 +79,6 @@ class _LocationState extends State<Location> {
   void initState() {
     super.initState();
     callme();
-
   }
 
   @override
@@ -106,7 +105,28 @@ class _LocationState extends State<Location> {
                       Text("Location is $_currentAddress")
                     ],
                   ),
-                 
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomeScreen(city: city),
+                        ),
+                      );
+                    },
+                    child: Text("Weather"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SearchCity(),
+                        ),
+                      );
+                    },
+                    child: Text("Search city"),
+                  ),
                 ],
               ),
       ),

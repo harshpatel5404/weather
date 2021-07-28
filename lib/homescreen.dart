@@ -4,13 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+    final city;
+  const HomeScreen({Key? key, this.city}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+
+
   bool isRain = false;
   var datetime = DateTime.now();
   List<String> months = [
@@ -145,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       Text(
-                        "Surat",
+                        widget.city,
                         style: TextStyle(
                             fontSize: 30,
                             color: Colors.purple[900],
