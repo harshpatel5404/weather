@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Weather App',
-        home: Location());
+        home: HomeScreen());
   }
 }
 

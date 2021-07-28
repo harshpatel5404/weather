@@ -1,6 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:weather/location.dart';
-
 import 'homescreen.dart';
 
 class SearchCity extends StatelessWidget {
@@ -9,8 +9,6 @@ class SearchCity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var city;
-    TextEditingController? _controller;
-
     return Scaffold(
       body: Center(
           child: Column(
@@ -40,8 +38,12 @@ class SearchCity extends StatelessWidget {
             child: ElevatedButton(
                 onPressed: () {
                   print(city);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomeScreen(city: city,)));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HomeScreen(
+                                city: city,
+                              )));
                 },
                 child: Text("Confirm")),
           )
