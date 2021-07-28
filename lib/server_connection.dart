@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:weather/weather_response.dart';
 
  
@@ -19,10 +21,14 @@ Future <Dio> getDio()async{
 
 
 
-Future<WeatherResponse> getWeather()async{
+Future<WeatherResponse> getWeather(String city)async{
 Dio dio = await getDio();
-Response response = await dio.get('weather?q=surat&appid=cea649bb9d02e431e505cc83b567e000');
-print("response ${response.data}");
+
+Response response = await dio.get('weather?q=$city&appid=cea649bb9d02e431e505cc83b567e000');
+if (response.data['cod'] == "404") {
+ var weatherResponse = WeatherResponse.fromMap(response.data);
+  return weatherResponse; 
+}
 try {
   final weatherResponse = WeatherResponse.fromMap(response.data);
   return weatherResponse; 

@@ -1,11 +1,8 @@
 // To parse this JSON data, do
 //
-//     final weatherResponse = weatherResponseFromMap(jsonString);
+//     final weatherResponse? = weatherResponseFromMap(jsonString);
 
 import 'dart:convert';
-
-import 'dart:core';
-
 
 class WeatherResponse {
     WeatherResponse({
@@ -19,6 +16,7 @@ class WeatherResponse {
         this.dt,
         this.sys,
         this.timezone,
+        this.message,
         this.id,
         this.name,
         this.cod,
@@ -34,6 +32,7 @@ class WeatherResponse {
     final int? dt;
     final Sys? sys;
     final int? timezone;
+    final String? message;
     final int? id;
     final String? name;
     final int? cod;
@@ -53,6 +52,7 @@ class WeatherResponse {
         dt: json["dt"],
         sys: Sys.fromMap(json["sys"]),
         timezone: json["timezone"],
+        message: json["message"],
         id: json["id"],
         name: json["name"],
         cod: json["cod"],
@@ -69,6 +69,7 @@ class WeatherResponse {
         "dt": dt,
         "sys": sys!.toMap(),
         "timezone": timezone,
+        "message": message,
         "id": id,
         "name": name,
         "cod": cod,

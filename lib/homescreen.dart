@@ -38,25 +38,31 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         body: FutureBuilder<WeatherResponse>(
-          future: getWeather(),
+          future: getWeather(widget.city),
           builder:
               (BuildContext context, AsyncSnapshot<WeatherResponse> snapshot) {
-            if (snapshot.data == null) {
-              return Center(child: CircularProgressIndicator());
+                  
+            if (snapshot.data == null ) {
+              return  Center(child: Text("City not Found"));
+              
             }
-            if (snapshot.data != null) {
+            // if ((snapshot.data!.cod).toString() == "404") {
+            //   return Center(child: Text("City not Found"));
+            // }
+            if (snapshot.data != null || snapshot.data!.cod == 200) {
               var data = snapshot.data!;
-             var weather = data.weather![0].main.toString();
+              print("${snapshot.data!.cod!}");
+              var weather = data.weather![0].main.toString();
               var temp = (data.main!.temp!).toDouble();
-              int cel =( temp - 273.15).toInt();
-              if (weather == "Clouds" || weather == "Haze" || weather == "Drizzle" || weather == "Rain") {
-                isRain =true;
-              }
-              else{
+              int cel = (temp - 273.15).toInt();
+              if (weather == "Clouds" ||
+                  weather == "Haze" ||
+                  weather == "Drizzle" ||
+                  weather == "Rain") {
+                isRain = true;
+              } else {
                 isRain = false;
               }
-              
-
 
               return Stack(
                 children: [
